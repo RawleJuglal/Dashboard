@@ -1,0 +1,47 @@
+#--app-dashboard-container{
+  min-height:100vh;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 0px 0px 20px #aaaaaa;
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+h1{
+  color:Blue;
+  font-size:3rem;
+  font-weight:bold;
+}
+#--app-bottom-container{
+  display:flex;
+  flex-direction:column;
+}
+
+#--app-unsplash-attribution{
+  align-self:flex-end;
+  order: 5;
+}
+
+@media screen and (min-width:768px) {
+  #--app-top-container{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+  }
+  
+  #--app-middle-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  #--app-bottom-container{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+  }
+  #--app-unsplash-attribution{
+    order:0;
+  }
+}
