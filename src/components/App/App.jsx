@@ -4,71 +4,41 @@ import { nanoid } from 'nanoid'
 import Coin from '../Coin/Coin'
 
 function App() {
-  const [state, setState] = React.useState({unsplash:{urls:{full:'', regular:''},user:{name:'',portfolio_url:''}}, gecko:[]})
+  const [unsplash, setUnsplash] = React.useState({data:{urls:{full:'', regular:''},user:{name:'',portfolio_url:''}}})
+  const [gecko, setGecko] = React.useState({data:[]})
   const [count, setCount] = React.useState(0);
+
+  /*Global Variables*/
+  let controller;
+
+  /*Unsplash Variables */
   const access = 'PwT5nDzZkavawPr46dT16uPs6Ig6jey58bPRzZIxyPY'
   const unsplashUrl = `https://api.unsplash.com/photos/random/?client_id=${access}&orientation=landscape&query=nature`
   const scrimbaUrl = `https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature`
+
+  /*Coin Gecko Variables*/
   const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/`
   const coinArr = [{name:'bitcoin', image:{small:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579'}},{name:'dogecoin', image:{small:"https://assets.coingecko.com/coins/images/5/small/dogecoin.png?1547792256"}},{name:'ethereum', image:{small:"https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880"}}, {name:'litecoin', image:{small:"https://assets.coingecko.com/coins/images/2/small/litecoin.png?1547033580"}}]
-  // let coinList = state.gecko.map((ele)=>{
-  //   return <Coin key={nanoid()} data={ele} />
-  // })
+  let coinList = gecko.data.map((ele)=>{
+    return <Coin key={nanoid()} data={ele} />
+  })
 
   const styles = {
     container:{
-      backgroundImage:`url(${state.unsplash.urls.full})`,
+      backgroundImage:`url(${unsplash.data.urls.full})`,
       backgroundSize:'cover',
       backgroundRepeat:'no-repeat'
     }
   }
 
   React.useEffect(()=>{
-    callScrimbaApi()
-  },[])
-  
-  React.useEffect(()=>{  
-    let ignore = false;
-
-     const getData = async()=> {
-      try{
-        let results = await coinArr.map(async(ele)=>{
-          let res =  await fetch(coinGeckoUrl + ele.name)
-          let data = await res.json()
-          return data
-        })
-        return results
-      } catch(err) {
-        console.log(err)
-      }
-    }
-    
-      if(!ignore){
-        getData().then((res)=>{
-          console.log(res)
-          setState((prevState)=>{
-            return {...prevState, gecko:res}
-          })
-        })
-        
-      }
-      
-    
-
-    return()=> {
-      ignore = true
-    }
-    
-
-  }, [])
-
-  function callScrimbaApi(){
-    fetch(scrimbaUrl)
+    if(count === 0){
+      fetch(scrimbaUrl)
       .then(res=>res.json())
       .then(data=>{
-        // console.log(data)
-        setState((prevState)=>{
-          return {...prevState, unsplash:data}
+        // console.log('called fetch')
+        setUnsplash((prevState)=>{
+          return {...prevState, data:data}
         })
       })
       .catch((err)=>{
@@ -77,29 +47,55 @@ function App() {
         let defaultName = 'Aperture Vintage'
         let defaultPortfolio = 'https://creativemarket.com/PedroCS?u=PedroCS'
         let defaultUnsplash = {urls:{full:defaultBackground}, user:{name:defaultName, portfolio_url:defaultPortfolio}}
-        setState((prevState)=>{
-          return {...prevState, unsplash:defaultUnsplash}
+        setUnsplash((prevState)=>{
+          return {...prevState, data:defaultUnsplash}
         })
       })
-  }
+    }
+    
+      return ()=>{
+        setCount((prevCount)=>prevCount+1)
+      }
+  },[])
 
-  
+  React.useEffect(()=>{
+    if(count === 0){
+      let finalCoinArr = coinArr.map((ele)=>{
+       return fetch(`${coinGeckoUrl}${ele.name}`)
+          .then(res=>res.json())
+          .then(data=>{
+            return data
+          })
+      })
+      setGecko(()=>{
+        return {data:finalCoinArr}
+      })
+    }
+    
+    return ()=>{
+      setGecko(()=>{
+        return {data:[]}
+      })
+    }
+  },[])
+  console.log(gecko)
 
- 
+  /*Returned */
+// {data: Array(4)}
+// data: Array(4)
+// 0: Promise {<fulfilled>: {…}}
+// 1: Promise {<fulfilled>: {…}}
+// 2: Promise {<fulfilled>: {…}}
+// 3: Promise {<fulfilled>: {…}}
+// length: 4
 
-  
-  
-
-  
-
-  
   return (
     <div id="--app-app-container">
       <div id='--app-dashboard-container' className='container' style={styles.container}>
         <div id='--app-top-container'>
           <div className='--app-left-container'>
             <h1>Left Container</h1>
-            {/* {coinList} */}
+            {coinList}
           </div>
           <div className='--app-right-container'>
             <h1>Right Container</h1>
@@ -114,7 +110,7 @@ function App() {
         </div>
         <div id="--app-bottom-container">
           <div id="--app-unsplash-attribution">
-            <p>Photo by <a href={state.unsplash.user.portfolio_url}>{state.unsplash.user.name}</a> on <a href="">Unsplash</a></p>
+            <p>Photo by <a href={unsplash.data.user.portfolio_url}>{unsplash.data.user.name}</a> on <a href="">Unsplash</a></p>
           </div>
           <div className='--app-bottom-centerpeice-container'>
             <h1>Bottom Centerpeice</h1>
