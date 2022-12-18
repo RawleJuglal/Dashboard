@@ -11,7 +11,7 @@ function App() {
       {id:'ethereum',image:{small:'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880'},market_data:{market_cap_change_24h_in_currency:{usd:'Not Available'}}},
       {id:'litecoin',image:{small:'https://assets.coingecko.com/coins/images/2/small/litecoin.png?1547033580'},market_data:{market_cap_change_24h_in_currency:{usd:'Not Available'}}}
     ])
-  const [count, setCount] = React.useState(0);
+  const [coinList, setCoinList] = React.useState([])
 
   /*Global Variables*/
   let unsplashController;
@@ -25,7 +25,6 @@ function App() {
   /*Coin Gecko Variables*/
   const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/`
   const coinArr = ['bitcoin','dogecoin','ethereum','litecoin']
-  let coinList = [];
 
   const styles = {
     container:{
@@ -65,10 +64,7 @@ function App() {
             console.log(`gecko data block`)
             // console.log(data)
            setPreviousState('gecko', data)
-            coinList = gecko.map((item)=>{
-              return <Coin key={nanoid()} data={item} />
-            })
-            console.log(coinList)
+           setCoinList(gecko.map((item)=>({ id:nanoid(), data:{item}})))
           })
           .catch(err=>console.log(err))
         })
@@ -149,7 +145,11 @@ function App() {
         <div id='--app-top-container'>
           <div className='--app-left-container'>
             <h1>Left Container</h1>
-            {coinList}
+            {
+              coinList?.map(item => {
+                 return <Coin key={item.id} data={item.data} />
+              })
+            }
           </div>
           <div className='--app-right-container'>
             <h1>Right Container</h1>
