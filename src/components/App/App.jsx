@@ -66,13 +66,12 @@ function App() {
             // console.log(data)
            setPreviousState('gecko', data)
             coinList = gecko.map((item)=>{
-              // console.log(item)
               return <Coin key={nanoid()} data={item} />
             })
+            console.log(coinList)
           })
           .catch(err=>console.log(err))
         })
-        
   },[])
   
   function saveToLocalStorage(name, info){
@@ -131,7 +130,7 @@ function App() {
         case 'gecko':
             hadData = true;
             setGecko(()=>{
-              return {...fetchData}
+              return [...fetchData]
             })
           break;
         default:
