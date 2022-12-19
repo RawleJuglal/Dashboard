@@ -1,3 +1,28 @@
+#--coin-crypto-top{
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    font-size: 1.3rem;
+    
+}
+
+#--coin-crypto-data{
+    margin-left:12px;
+}
+
+.--coin-img{
+    margin:8px 8px;
+    width:32px;
+    background-color:white;
+}
+
 #--coin-coin-name{
-    text-transform: capitalize;
+    margin-right:8px;
+}
+
+#--coin-crypto-current,#--coin-crypto-high,#--coin-crypto-low{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    font-size:1.2rem;
 }
