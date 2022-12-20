@@ -5,7 +5,6 @@ import { UilAngleDoubleUp } from '@iconscout/react-unicons'
 import { UilAngleDoubleDown } from '@iconscout/react-unicons'
 
 export default function Coin(props){
-    console.log(props.data)
     return( 
         <div id="--coin-coin-container">
             <div id="--coin-crypto-top">
