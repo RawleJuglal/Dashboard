@@ -2,33 +2,22 @@ import React from 'react'
 import './App.css'
 import { nanoid } from 'nanoid'
 import { DateTime } from "luxon";
-import Coin from '../Coin/Coin'
+import Access from '../../../private'
+import Gecko from '../Gecko/Gecko'
+import LuxonTime from '../LuxonTime/LuxonTime';
+import Weather from '../Weather/Weather';
 
 function App() {
   const [unsplash, setUnsplash] = React.useState({urls:{full:'', regular:''},user:{name:'',portfolio_url:''}})
-  const [gecko, setGecko] = React.useState({id:'bitcoin',image:{small:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579'},market_data:{ current_price:{usd:'Not Available'},high_24h:{usd:'Not Available'},low_24h:{usd:'Not Available'},market_cap_change_24h_in_currency:{usd:'Not Available' }}})
-  const [luxTime, setLuxTime] = React.useState({})
-  const [personalLocation, setPersonalLocation] = React.useState({lon:'Not Available', lat:'Not Available'})
-  const [weather, setWeather] = React.useState({name:'Unavailable'})
 
   /*Global Variables*/
   let unsplashController;
-  let geoController;
+  // let geoController;
 
   /*Unsplash Variables */
-  const unsplashAccess = 'PwT5nDzZkavawPr46dT16uPs6Ig6jey58bPRzZIxyPY'
+  const unsplashAccess = Access.unsplash
   const unsplashUrl = `https://api.unsplash.com/photos/random/?client_id=${unsplashAccess}&orientation=landscape&query=nature`
   const scrimbaUrl = `https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature`
-
-  /*Coin Gecko Variables*/
-  const coinGeckoUrl = `https://api.coingecko.com/api/v3/coins/bitcoin`
-
-  /*Weather Variables*/
-  const weatherAccess = `9575f3355ae129dc91424b5712a7695e`
-  let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?`
-  let scrimbaWeatherUrl = `https://apis.scrimba.com/openweathermap/data/2.5/weather?`
-  
-
 
   const styles = {
     container:{
@@ -61,49 +50,6 @@ function App() {
         }
   },[])
 
-  /*COIN GECKO USEEFFECT*/
-  React.useEffect(()=>{
-        // console.log(`calling gecko fetch`)
-        fetch(coinGeckoUrl)
-          .then(res=>res.json())
-          .then(data=>setPreviousState('gecko', data))
-          .catch(err=>{
-            // console.log('in gecko catch')
-            let defaultGecko = {
-                  id:'bitcoin',
-                  image:{
-                    small:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579'},
-                    market_data:{ 
-                      current_price:{usd:'Not Available'},
-                      high_24h:{usd:'Not Available'},
-                      low_24h:{usd:'Not Available'},
-                      market_cap_change_24h_in_currency:{usd:'Not Available' }}}
-            setPreviousState('gecko', defaultGecko)
-          })
-  },[])
-  
-/*LUXON TIME USEEFFECT*/
-  React.useEffect(()=>{
-    const date = DateTime.now()
-    let DateStr = date.toLocaleString(DateTime.TIME_SIMPLE)
-    // console.log(typeof DateObj)
-    setLuxTime(()=>{
-      return{now:DateStr}
-    })
-    setInterval(watchLuxTime, 1000)
-  },[])
-
-  /*Weather USEEFFECT*/
-  React.useEffect(()=>{
-    navigator.geolocation.getCurrentPosition(saveNavigationCoords)
-    updateWeatherURL()
-    fetch(scrimbaWeatherUrl)
-      .then(res=>res.json())
-      .then(data=>{
-        let weatherData = data
-        setPreviousState('weather', weatherData)
-      })
-  },[])
 
   function saveToLocalStorage(name, info){
     // console.log(`calling save to localStorage`)
@@ -190,53 +136,23 @@ function App() {
     return hadData;
   }
 
-  function watchLuxTime(){
-      if(getLuxTime() !== luxTime.now){
-        setNewLuxTime(getLuxTime())
-      }
-  }
-
-  function getLuxTime(){
-    let newDate = DateTime.now()
-    let newDateStr = newDate.toLocaleString(DateTime.TIME_SIMPLE)
-    return newDateStr
-  }
-
-  function setNewLuxTime(timeUpdate){
-    setLuxTime(()=>{
-      return {now:timeUpdate}
-    })
-  }
-
-  function saveNavigationCoords(pos){
-    console.log(`calling saveNav`)
-    let newCoords = {lat:pos.coords.latitude, lon:pos.coords.longitude}
-    setPersonalLocation(()=>{
-      return {...newCoords}
-    })
-  }
-
-  function updateWeatherURL(){
-    weatherUrl = `${weatherUrl}lat=${personalLocation.lat}&lon=${personalLocation.lon}&appid=${weatherAccess}`
-    scrimbaWeatherUrl = `${scrimbaWeatherUrl}lat=${personalLocation.lat}&lon=${personalLocation.lon}`
-  }
-
   return (
     <div id="--app-app-container">
       <div id='--app-dashboard-container' className='container' style={styles.container} >
         <div id='--app-top-container'>
           <div className='--app-left-container'>
-              <Coin key={nanoid()} data={gecko} />
+              {/* <Coin key={nanoid()} data={gecko} /> */}
+              <Gecko />
           </div>
           <div className='--app-right-container'>
             <h1>Right Container</h1>
-            {weather.name}
+            <Weather />
           </div>
         </div>
         <div id='--app-middle-container'>
         <div className='--app-centerpeice-container'>
           <h1>Centerpeice</h1>
-          {luxTime.now}
+          <LuxonTime />
         </div>
         </div>
         <div id="--app-bottom-container">

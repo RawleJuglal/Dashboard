@@ -1,0 +1,28 @@
+#--gecko-crypto-top{
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    font-size: 1.3rem;
+    
+}
+
+#--gecko-crypto-data{
+    margin-left:12px;
+}
+
+.--gecko-img{
+    margin:8px 8px;
+    width:32px;
+    background-color:white;
+}
+
+#--gecko-coin-name{
+    margin-right:8px;
+}
+
+#--gecko-crypto-current,#--gecko-crypto-high,#--gecko-crypto-low{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    font-size:1.2rem;
+}
