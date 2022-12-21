@@ -3,7 +3,8 @@ import './Weather.css'
 import Access from '../../../private'
 
 export default function Weather(){
-    const [weather, setWeather] = React.useState({name:'Unavailable', weather:[{icon:''}]})
+    // const [weather, setWeather] = React.useState({name:'Unavailable',main:{temp:'Not available'}, weather:[{icon:''}]})
+    const [weather, setWeather] = React.useState({})
     const [isLoading, setIsLoading] = React.useState(true)
 
     const weatherAccess = Access.weather
@@ -26,7 +27,7 @@ export default function Weather(){
                     return res.json()
                 })
                 .then(data=>{
-                    console.log(data)
+                    // console.log(data)
                     setWeather(()=>{
                         return {...data}
                     })
@@ -46,10 +47,15 @@ export default function Weather(){
         })
     }
 
+    if(isLoading){
+        return <p>Loading...</p>
+      }
+
     return(
-        <div>
-            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}/>
-            <p>{weather.name}</p>
-        </div>
+        <div id="--weather-weather-container">
+        <img id="--weather-condition-icon" src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}/>
+        <span id="--weather-temperature">{Math.round(weather.main.temp)+'\u00b0'}</span>
+        <p id="--weather-city-name">{weather.name}</p>
+    </div>
     )
 }

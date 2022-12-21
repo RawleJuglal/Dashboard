@@ -45,8 +45,8 @@ export default function LuxonTime(){
     }
 
     return (
-        <div>
-            <p>{luxTime.now}</p>
+        <div id="--luxonTime-time-container">
+            <p id='--luxonTime-time'>{luxTime.now}</p>
         </div>
     )
 }

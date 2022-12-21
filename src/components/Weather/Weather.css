@@ -1,0 +1,11 @@
+img#--weather-condition-icon{
+    width:36px;
+}
+
+span#--weather-temperature{
+    font-size:2rem;
+}
+
+p#--weather-city-name{
+    margin-left:10px;
+}

@@ -59,77 +59,30 @@ function App() {
   }
 
   function retrieveLocalStorage(name){
-    console.log('retrieving local Storage')
-    switch(name) {
-      case 'unsplash':
-        unsplashController = JSON.parse(localStorage.getItem(name))
-        break;
-      case 'gecko':
-        geckoController = JSON.parse(localStorage.getItem(name))
-        break;
-      default:
-        console.log('bad switch statement')
-    }
+    // console.log('retrieving local Storage')
+    unsplashController = JSON.parse(localStorage.getItem(name))
     
   }
 
   function setPreviousState(state, fetchData){
-    console.log(`calling setPrevState ${state}`)
-    console.log(fetchData)
+    // console.log(`calling setPrevState ${state}`)
+    // console.log(fetchData)
     let hadData;
     if(fetchData === undefined && retrieveLocalStorage(state) !== undefined){
       let prevData = retrieveLocalStorage(state);
       // console.log(`P:`)
       // console.log(prevData)
-      switch(state) {
-        case 'unsplash':
-            hadData = true;
-            setUnsplash(()=>{
-              return {...prevData}
-            })
-          break;
-        case 'gecko':
-            hadData = true;
-            setGecko(()=>{
-              return {...prevData}
-            })
-          break;
-        case 'weather':
-            hadData = true;
-            setWeather(()=>{
-              return {...prevData}
-            })
-          break;
-        default:
-          hadData = false;
-          console.log('bad switch statement')
-      }
+      hadData = true;
+      setUnsplash(()=>{
+        return {...prevData}
+      })
     } else if(fetchData !== undefined){
       // console.log(`we had fetchData`)
-      switch(state) {   
-        case 'unsplash':
-            hadData = true;
+      hadData = true;
             saveToLocalStorage(state, fetchData)
             setUnsplash(()=>{
               return {...fetchData}
             })
-          break;
-        case 'gecko':
-            hadData = true;
-            setGecko(()=>{
-              return {...fetchData}
-            })
-          break;
-        case 'weather':
-            hadData = true;
-            setWeather(()=>{
-              return {...fetchData}
-            })
-          break;
-        default:
-          hadData = false;
-          console.log('bad switch statement')
-      }
     } else {
       hadData = false;
     }
@@ -141,17 +94,14 @@ function App() {
       <div id='--app-dashboard-container' className='container' style={styles.container} >
         <div id='--app-top-container'>
           <div className='--app-left-container'>
-              {/* <Coin key={nanoid()} data={gecko} /> */}
               <Gecko />
           </div>
           <div className='--app-right-container'>
-            <h1>Right Container</h1>
             <Weather />
           </div>
         </div>
         <div id='--app-middle-container'>
         <div className='--app-centerpeice-container'>
-          <h1>Centerpeice</h1>
           <LuxonTime />
         </div>
         </div>
@@ -160,12 +110,8 @@ function App() {
             <p>Photo by <a href={unsplash.user.portfolio_url}>{unsplash.user.name}</a> on <a href="">Unsplash</a></p>
           </div>
           <div className='--app-bottom-centerpeice-container'>
-            <h1>Bottom Centerpeice</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
           <div className='--app-bottom-right-container'>
-            <h1>Bottom Right</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
         </div>
       </div>

@@ -8,9 +8,26 @@
   justify-content: space-between;
 }
 
+div#--app-top-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div.--app-right-container{
+  margin-right:8px;
+}
+
+#--app-middle-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #--app-bottom-container{
   display:flex;
   flex-direction:column;
+  margin:10px 10px;
 }
 
 #--app-unsplash-attribution{
@@ -25,11 +42,7 @@
     justify-content: space-between;
   }
   
-  #--app-middle-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-  }
+  
   
   #--app-bottom-container{
     display:flex;
