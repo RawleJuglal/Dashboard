@@ -1,11 +1,10 @@
 import React from 'react'
 import './App.css'
-import { nanoid } from 'nanoid'
-import { DateTime } from "luxon";
-import Access from '../../../private'
-import Gecko from '../Gecko/Gecko'
-import LuxonTime from '../LuxonTime/LuxonTime';
-import Weather from '../Weather/Weather';
+import Access from '../private'
+import Gecko from './components/Gecko/Gecko'
+import LuxonTime from './components/LuxonTime/LuxonTime'
+import Weather from './components/Weather/Weather'
+
 
 function App() {
   const [unsplash, setUnsplash] = React.useState({urls:{full:'', regular:''},user:{name:'',portfolio_url:''}})
@@ -34,7 +33,7 @@ function App() {
         // console.log(controller)
         if(unsplashController === null){
           // console.log(`calling unsplash fetch`)
-          fetch(scrimbaUrl)
+          fetch(unsplashUrl)
             .then(res=>res.json())
             .then(data=>setPreviousState('unsplash', data))
             .catch(err=>{

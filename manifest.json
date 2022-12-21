@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Just for practicing async JS",
     "action": {
-        "default_icon": "public/images/icon.png"
+        "default_icon": "/public/images/icon.png"
     },
     "chrome_url_overrides": {
         "newtab": "index.html"

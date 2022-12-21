@@ -19,7 +19,7 @@ export default function Weather(){
         // console.log('calling loading weather')
         setIsLoading(true)
         navigator.geolocation.getCurrentPosition(position=>{
-            fetch(`${scrimbaWeatherUrl}lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=${weatherAccess}`)
+            fetch(`${weatherUrl}lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=${weatherAccess}`)
                 .then(res=>{
                     if(!res.ok){
                         throw Error('Weather data not available')
