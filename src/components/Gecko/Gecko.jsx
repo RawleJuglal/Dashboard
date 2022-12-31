@@ -3,7 +3,6 @@ import './Gecko.css'
 import { UilCrosshair } from '@iconscout/react-unicons'
 import { UilAngleDoubleUp } from '@iconscout/react-unicons'
 import { UilAngleDoubleDown } from '@iconscout/react-unicons'
-import Coin from '../Coin/Coin'
 
 export default function Gecko(){
     const [gecko, setGecko] = React.useState({})
